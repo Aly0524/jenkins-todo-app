@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Automated To-Do List sa Wakas!</h2>
+        <h2>List sa Wakas!</h2>
         <p class="status-badge">Status: Monitored by Jenkins CI/CD</p>
         <div class="input-section">
             <input type="text" id="taskInput" placeholder="Magdagdag ng bagong gawain...">
@@ -19,3 +19,90 @@
     <script src="app.js"></script>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow — Automated To-Do</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="glow-orb glow-1"></div>
+  <div class="glow-orb glow-2"></div>
+
+  <main class="app">
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-mark">✦</div>
+        <div>
+          <h1>TaskFlow</h1>
+          <p class="subtitle">Automated & CI/CD-monitored</p>
+        </div>
+      </div>
+      <div class="ci-pill">
+        <span class="pulse-dot"></span>
+        Jenkins Active
+      </div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-val" id="stat-total">0</span>
+        <span class="stat-key">Total</span>
+      </div>
+      <div class="stat-card accent">
+        <span class="stat-val" id="stat-done">0</span>
+        <span class="stat-key">Done</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val" id="stat-left">0</span>
+        <span class="stat-key">Remaining</span>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-meta">
+        <span>Progress</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progFill"></div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input
+        id="taskInput"
+        class="task-input"
+        type="text"
+        placeholder="Anong dapat gawin ngayon…"
+        autocomplete="off"
+      />
+      <button class="add-btn" onclick="addTask()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add
+      </button>
+    </div>
+
+    <div class="filter-tabs" role="tablist">
+      <button class="tab active" onclick="setFilter('all',this)">All</button>
+      <button class="tab" onclick="setFilter('active',this)">Active</button>
+      <button class="tab" onclick="setFilter('done',this)">Done</button>
+    </div>
+
+    <ul class="task-list" id="taskList" aria-label="Task list">
+      <li class="empty-state" id="emptyState">
+        <span class="empty-icon">◎</span>
+        <span>Wala pang gawain — mag-add na!</span>
+      </li>
+    </ul>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>  -->
