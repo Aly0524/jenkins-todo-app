@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -11,78 +11,3 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-
-  <div class="noise"></div>
-  <div class="glow-orb glow-1"></div>
-  <div class="glow-orb glow-2"></div>
-
-  <main class="app">
-
-    <!-- HEADER -->
-    <header class="app-header">
-      <div class="header-left">
-        <div class="logo-mark">✦</div>
-        <div>
-          <h1>TaskFlow</h1>
-          <p class="subtitle">Craft your focus, one flow at a time.</p>
-        </div>
-      </div>
-    </header>
-
-    <!-- STATS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-val" id="stat-total">0</span>
-        <span class="stat-key">Total</span>
-      </div>
-
-      <div class="stat-card accent">
-        <span class="stat-val" id="stat-done">0</span>
-        <span class="stat-key">Done</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-val" id="stat-left">0</span>
-        <span class="stat-key">Remaining</span>
-      </div>
-    </div>
-
-    <!-- PROGRESS -->
-    <div class="progress-section">
-      <div class="progress-meta">
-        <span>Progress</span>
-        <span id="prog-pct">0%</span>
-      </div>
-
-      <div class="progress-track">
-        <div class="progress-fill" id="progFill"></div>
-      </div>
-    </div>
-
-    <!-- INPUT -->
-    <div class="input-area">
-      <input id="taskInput" class="task-input" type="text" placeholder="Anong gagawin mo ngayon?" autocomplete="off">
-
-      <button class="add-btn" onclick="addTask()">Add</button>
-    </div>
-
-    <!-- FILTERS -->
-    <div class="filter-tabs">
-      <button class="tab active" onclick="setFilter('all', this)">All</button>
-      <button class="tab" onclick="setFilter('active', this)">Active</button>
-      <button class="tab" onclick="setFilter('done', this)">Done</button>
-      <button class="tab" onclick="clearCompleted()">Clear Done</button>
-    </div>
-
-    <!-- LIST -->
-    <ul class="task-list" id="taskList">
-      <li class="empty-state" id="emptyState">Wala pang task — mag-add ka na!</li>
-    </ul>
-
-  </main>
-
-  <script src="app.js"></script>
-</body>
-</html>
