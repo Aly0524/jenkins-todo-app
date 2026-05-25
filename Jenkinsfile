@@ -4,26 +4,26 @@ pipeline {
     stages {
         stage('1. Checkout Code') {
             steps {
-                echo 'Kasalukuyang kinukuha ang pinakabagong code mula sa GitHub...'
-                // Dito hihilahin ni Jenkins ang mga files mo
+                echo 'In the meantime, fetching the latest code from GitHub...'
+                // This is where Jenkins will pull the files
             }
         }
         stage('2. Code Security Audit') {
             steps {
-                echo 'Sinusuri ang integridad ng HTML, CSS, at JS files...'
-                sh 'ls -la' // I-lilist nito ang mga files para patunayang nakuha lahat
+                echo 'checking the integration of HTML, CSS, at JS files...'
+                bat 'dir' // This will list the files to prove everything was successfully retrieved
             }
         }
         stage('3. Automated Testing') {
             steps {
-                echo 'Pina-padaan sa kunwaring Unit Test...'
-                echo 'TEST PASSED: Lahat ng buttons at functions ay gumagana.'
+                echo 'Running a mock Unit Test...'
+                echo 'TEST PASSED: All buttons and functions are working.'
             }
         }
         stage('4. Simulated Deployment') {
             steps {
-                echo 'SULYAP SA DEPLOYMENT: Ang Web App ay handa na para sa produksyon!'
-                echo 'Success! Tapos na ang CI/CD Pipeline Build.'
+                echo 'DEPLOYMENT SNEAK PEEK: The Web App is ready for production!'
+                echo 'Success! The CI/CD Pipeline Build is complete.'
             }
         }
     }
