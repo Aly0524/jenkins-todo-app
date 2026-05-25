@@ -101,15 +101,31 @@ function render() {
   );
 
   if (!visible.length) {
-    list.innerHTML = `<li class="task-item">No tasks found</li>`;
+    list.innerHTML = `<li class="empty-state">Walang nahanap na task — mag-add ka na! ✨</li>`;
     return;
   }
 
   list.innerHTML = visible.map(t => `
-    <li class="task-item ${t.done ? 'done' : ''}">
-      <button onclick="toggleTask(${t.id})">✓</button>
-      <span>${escapeHtml(t.text)}</span>
-      <button onclick="deleteTask(${t.id})">🗑</button>
+    <li class="task-item ${t.done ? 'done' : ''}" style="--item-color: ${t.color}">
+      <div class="task-checkbox-wrapper" onclick="toggleTask(${t.id})">
+        <div class="task-checkbox">
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+      </div>
+      <div class="task-content" onclick="toggleTask(${t.id})">
+        <span class="task-text">${escapeHtml(t.text)}</span>
+        <span class="task-time">${t.time}</span>
+      </div>
+      <button class="delete-btn" onclick="deleteTask(${t.id})" aria-label="Delete task">
+        <svg class="trash-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </button>
     </li>
   `).join('');
 }
