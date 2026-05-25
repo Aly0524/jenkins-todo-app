@@ -1,202 +1,133 @@
-const COLORS = [
-  '#a78bfa',
-  '#60a5fa',
-  '#34d399',
-  '#fbbf24',
-  '#f472b6',
-  '#fb923c',
-];
+const ACCENT_COLORS = ['#a78bfa', '#34d399', '#60a5fa', '#fbbf24'];
 
-const state = {
-  tasks: JSON.parse(localStorage.getItem('tasks')) || [],
-  filter: 'all',
-};
+let tasks = [];
+let filter = 'all';
+let colorIndex = 0;
 
-const elements = {
-  taskInput: document.getElementById('taskInput'),
-  taskList: document.getElementById('taskList'),
-  addBtn: document.getElementById('addTaskBtn'),
-
-  total: document.getElementById('stat-total'),
-  done: document.getElementById('stat-done'),
-  left: document.getElementById('stat-left'),
-
-  progressText: document.getElementById('prog-pct'),
-  progressFill: document.getElementById('progFill'),
-
-  tabs: document.querySelectorAll('.tab'),
-};
-
-function saveTasks() {
-  localStorage.setItem('tasks', JSON.stringify(state.tasks));
+/* LOAD */
+function loadTasks() {
+  const data = localStorage.getItem('tasks');
+  if (data) tasks = JSON.parse(data);
 }
 
-function getTime() {
+/* SAVE */
+function saveTasks() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function getNow() {
   return new Date().toLocaleTimeString('en-PH', {
     hour: '2-digit',
-    minute: '2-digit',
+    minute: '2-digit'
   });
 }
 
+/* ADD */
 function addTask() {
-  const text = elements.taskInput.value.trim();
-
+  const input = document.getElementById('taskInput');
+  const text = input.value.trim();
   if (!text) return;
 
-  state.tasks.unshift({
-    id: crypto.randomUUID(),
+  tasks.unshift({
+    id: Date.now(),
     text,
     done: false,
-    color: COLORS[state.tasks.length % COLORS.length],
-    time: getTime(),
+    time: getNow(),
+    color: ACCENT_COLORS[colorIndex % ACCENT_COLORS.length]
   });
 
-  elements.taskInput.value = '';
+  colorIndex++;
+  input.value = '';
+  input.focus();
 
   saveTasks();
   render();
 }
 
+/* TOGGLE */
 function toggleTask(id) {
-  state.tasks = state.tasks.map(task =>
-    task.id === id
-      ? { ...task, done: !task.done }
-      : task
-  );
+  const t = tasks.find(x => x.id === id);
+  if (t) t.done = !t.done;
 
   saveTasks();
   render();
 }
 
+/* DELETE */
 function deleteTask(id) {
-  state.tasks = state.tasks.filter(task => task.id !== id);
-
+  tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   render();
 }
 
-function setFilter(filter) {
-  state.filter = filter;
+/* FILTER */
+function setFilter(f, btn) {
+  filter = f;
 
-  elements.tabs.forEach(tab => {
-    tab.classList.toggle(
-      'active',
-      tab.dataset.filter === filter
-    );
-  });
+  document.querySelectorAll('.tab')
+    .forEach(b => b.classList.remove('active'));
 
+  btn.classList.add('active');
   render();
 }
 
-function getFilteredTasks() {
-  switch (state.filter) {
-    case 'active':
-      return state.tasks.filter(task => !task.done);
-
-    case 'done':
-      return state.tasks.filter(task => task.done);
-
-    default:
-      return state.tasks;
-  }
+/* CLEAR DONE */
+function clearCompleted() {
+  tasks = tasks.filter(t => !t.done);
+  saveTasks();
+  render();
 }
 
-function updateStats() {
-  const total = state.tasks.length;
-  const done = state.tasks.filter(t => t.done).length;
+/* RENDER */
+function render() {
+  const total = tasks.length;
+  const done = tasks.filter(t => t.done).length;
   const left = total - done;
 
-  const percent = total
-    ? Math.round((done / total) * 100)
-    : 0;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-left').textContent = left;
 
-  elements.total.textContent = total;
-  elements.done.textContent = done;
-  elements.left.textContent = left;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('progFill').style.width = pct + '%';
 
-  elements.progressText.textContent = `${percent}%`;
-  elements.progressFill.style.width = `${percent}%`;
-}
+  const list = document.getElementById('taskList');
 
-function renderEmpty() {
-  elements.taskList.innerHTML = `
-    <li class="empty-state">
-      <span class="empty-icon">◎</span>
-      <span>No tasks found.</span>
-    </li>
-  `;
-}
+  const visible = tasks.filter(t =>
+    filter === 'all' ? true :
+    filter === 'done' ? t.done :
+    !t.done
+  );
 
-function createTaskElement(task) {
-  const li = document.createElement('li');
-
-  li.className = `task-item ${task.done ? 'done' : ''}`;
-
-  li.style.setProperty('--item-color', task.color);
-
-  li.innerHTML = `
-    <button class="check-btn">
-      ${task.done ? '✓' : ''}
-    </button>
-
-    <span class="task-text"></span>
-
-    <div class="task-right">
-      <span class="task-time">${task.time}</span>
-
-      <button class="del-btn">
-        ✕
-      </button>
-    </div>
-  `;
-
-  li.querySelector('.task-text').textContent = task.text;
-
-  li.querySelector('.check-btn')
-    .addEventListener('click', () => toggleTask(task.id));
-
-  li.querySelector('.del-btn')
-    .addEventListener('click', () => deleteTask(task.id));
-
-  return li;
-}
-
-function render() {
-  updateStats();
-
-  const tasks = getFilteredTasks();
-
-  elements.taskList.innerHTML = '';
-
-  if (!tasks.length) {
-    renderEmpty();
+  if (!visible.length) {
+    list.innerHTML = `<li class="task-item">No tasks found</li>`;
     return;
   }
 
-  tasks.forEach(task => {
-    elements.taskList.appendChild(
-      createTaskElement(task)
-    );
-  });
+  list.innerHTML = visible.map(t => `
+    <li class="task-item ${t.done ? 'done' : ''}">
+      <button onclick="toggleTask(${t.id})">✓</button>
+      <span>${escapeHtml(t.text)}</span>
+      <button onclick="deleteTask(${t.id})">🗑</button>
+    </li>
+  `).join('');
 }
 
-elements.addBtn.addEventListener('click', addTask);
+/* SAFE TEXT */
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
-elements.taskInput.addEventListener('keydown', event => {
-  if (event.key === 'Enter') {
-    addTask();
-  }
-});
-
-elements.tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    setFilter(tab.dataset.filter);
+/* ENTER KEY */
+document.getElementById('taskInput')
+  .addEventListener('keydown', e => {
+    if (e.key === 'Enter') addTask();
   });
-});
 
+/* INIT */
+loadTasks();
 render();
-
-console.log(
-  '%c TaskFlow Ready ',
-  'background:#7c3aed;color:#fff;padding:6px 10px;border-radius:6px;font-weight:bold;'
-);

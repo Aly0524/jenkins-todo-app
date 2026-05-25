@@ -2,37 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TaskFlow — Automated ToDo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TaskFlow — Enhanced To-Do</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
   <div class="noise"></div>
   <div class="glow-orb glow-1"></div>
   <div class="glow-orb glow-2"></div>
 
   <main class="app">
+
+    <!-- HEADER -->
     <header class="app-header">
       <div class="header-left">
         <div class="logo-mark">✦</div>
-
         <div>
           <h1>TaskFlow</h1>
-          <p class="subtitle">Automated & CI/CD-monitored</p>
+          <p class="subtitle">Simple Enhanced To-Do App</p>
         </div>
-      </div>
-
-      <div class="ci-pill">
-        <span class="pulse-dot"></span>
-        Jenkins Active
       </div>
     </header>
 
+    <!-- STATS -->
     <div class="stats-grid">
       <div class="stat-card">
         <span class="stat-val" id="stat-total">0</span>
@@ -50,6 +49,7 @@
       </div>
     </div>
 
+    <!-- PROGRESS -->
     <div class="progress-section">
       <div class="progress-meta">
         <span>Progress</span>
@@ -61,27 +61,26 @@
       </div>
     </div>
 
+    <!-- INPUT -->
     <div class="input-area">
-      <input
-        id="taskInput"
-        class="task-input"
-        type="text"
-        placeholder="Anong dapat gawin ngayon…"
-        autocomplete="off"
-      />
+      <input id="taskInput" class="task-input" type="text" placeholder="Anong gagawin mo ngayon?" autocomplete="off">
 
-      <button class="add-btn" id="addTaskBtn">
-        Add
-      </button>
+      <button class="add-btn" onclick="addTask()">Add</button>
     </div>
 
+    <!-- FILTERS -->
     <div class="filter-tabs">
-      <button class="tab active" data-filter="all">All</button>
-      <button class="tab" data-filter="active">Active</button>
-      <button class="tab" data-filter="done">Done</button>
+      <button class="tab active" onclick="setFilter('all', this)">All</button>
+      <button class="tab" onclick="setFilter('active', this)">Active</button>
+      <button class="tab" onclick="setFilter('done', this)">Done</button>
+      <button class="tab" onclick="clearCompleted()">Clear Done</button>
     </div>
 
-    <ul class="task-list" id="taskList"></ul>
+    <!-- LIST -->
+    <ul class="task-list" id="taskList">
+      <li class="empty-state" id="emptyState">Wala pang task — mag-add ka na!</li>
+    </ul>
+
   </main>
 
   <script src="app.js"></script>
