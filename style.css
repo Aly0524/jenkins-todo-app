@@ -1,0 +1,35 @@
+
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0b0b12;
+  --surface:  #13131f;
+  --surface2: #1c1c2e;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.14);
+  --text:     #f0eeff;
+  --muted:    rgba(240,238,255,0.45);
+  --accent:   #a78bfa;
+  --accent2:  #7c3aed;
+  --green:    #34d399;
+  --red:      #f87171;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius:   14px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem 5rem;
+  overflow-x: hidden;
+  position: relative;
+} 

@@ -1,5 +1,3 @@
-// Automated To-Do | Monitored by Jenkins CI/CD
-
 const ACCENT_COLORS = [
   '#a78bfa', '#60a5fa', '#34d399',
   '#fbbf24', '#f472b6', '#fb923c',
@@ -51,7 +49,6 @@ function setFilter(f, btn) {
 }
 
 function render() {
-  // Stats
   const total = tasks.length;
   const done  = tasks.filter(t => t.done).length;
   const left  = total - done;
@@ -59,16 +56,14 @@ function render() {
   document.getElementById('stat-done').textContent  = done;
   document.getElementById('stat-left').textContent  = left;
 
-  // Progress
   const pct = total ? Math.round((done / total) * 100) : 0;
   document.getElementById('prog-pct').textContent = pct + '%';
   document.getElementById('progFill').style.width  = pct + '%';
 
-  // Filter
   const visible = tasks.filter(t =>
     filter === 'all'    ? true :
     filter === 'done'   ? t.done :
-    /* active */          !t.done
+                          !t.done
   );
 
   const list = document.getElementById('taskList');
@@ -114,12 +109,10 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-// Enter key support
 document.getElementById('taskInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') addTask();
 });
 
-// Initial render
 render();
 
 console.log('%c TaskFlow ✦ ', 'background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;', 'Successfully loaded. Jenkins CI/CD is watching.');
