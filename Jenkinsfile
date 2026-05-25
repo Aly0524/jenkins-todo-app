@@ -18,6 +18,7 @@ pipeline {
             steps {
                 echo 'Running a mock Unit Test...'
                 echo 'TEST PASSED: All buttons and functions are working.'
+                bat 'exit 1'
             }
         }
         stage('4. Simulated Deployment') {
